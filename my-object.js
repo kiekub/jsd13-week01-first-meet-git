@@ -1,74 +1,74 @@
-//"Seoul" , "Tokyo" , "Bangkok", "Pattaya" , "Khon Kaen" , "Udon Thani" , "Chiang Mai" , "Chiang Rai" , "Phuket" , "Hua Hin"
-
 let citiesDatabase = [
     { tour: 1,
         name: "Seoul",
         country: "South Korea",
         place: "Seoul Olympic Stadium",
         date: ["2026-08-01", "2026-08-02"],
-        price: { VIP: 30000, Regular: 20000, Economy: 15000 }
+        price: { VIP: 30000, Regular: 20000, Economy: 15000 },
+        image: "https://aespa.com/assets/lemonade/slides/0_aespa/0518/(1)aespa-LEMONADE.jpg"
     },
     { tour: 2,
         name: "Tokyo",
         country: "Japan",
         place: "Tokyo Dome",
         date: ["2026-08-22", "2026-08-23"],
-        price: { VIP: 50000, Regular: 30000, Economy: 20000 }
+        price: { VIP: 50000, Regular: 30000, Economy: 20000 },
+        image: "https://aespa.com/assets/lemonade/slides/0_aespa/0518/(2)aespa-LEMONADE.jpg"
     },
     { tour: 3,
         name: "Bangkok",
         country: "Thailand",
         place: "Rajamangala National Stadium",
         date: ["2026-09-04", "2026-09-05" , "2026-09-06"],
-        price: { VIP: 15000, Regular: 10000, Economy: 8000 }
+        price: { VIP: 15000, Regular: 10000, Economy: 8000 },
+        image: "https://aespa.com/assets/lemonade/slides/1_karina/0518/(3)karina-lemonade.jpg"
     },
     { tour: 4,
         name: "Pattaya",
         country: "Thailand",
         place: "Pattaya Beach",
         date: ["2026-09-11", "2026-09-12"],
-        price: { VIP: 15000, Regular: 8000, Economy: 5000 }
+        price: { VIP: 15000, Regular: 8000, Economy: 5000 },
+        image: "https://aespa.com/assets/lemonade/slides/2_giselle/0518/(4)giselle-lemonade.jpg"
     },
     { tour: 5,
         name: "Khon Kaen",
         country: "Thailand",
         place: "Khon Kaen Stadium",
         date: ["2026-09-19"],
-        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 },
+        image: "https://aespa.com/assets/lemonade/slides/3_winter/0518/(9)winter-lemonade.jpg"
     },
     { tour: 6,
         name: "Udon Thani",
         country: "Thailand",
         place: "Udon Thani Stadium",
         date: ["2026-09-25", "2026-09-26"],
-        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 },
+        image: "https://aespa.com/assets/lemonade/slides/4_ningning/0518/(3)ningning-lemonade.jpg"
     },
     { tour: 7,
         name: "Chiang Mai",
         country: "Thailand",
         place: "Chiang Mai Stadium",
         date: ["2026-10-03", "2026-10-04"],
-        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 },
+        image: "https://aespa.com/assets/lemonade/slides/0_aespa/0518/(1)aespa-LEMONADE.jpg"
     },
     { tour: 8,
         name: "Chiang Rai",
         country: "Thailand",
         place: "Chiang Rai Stadium",
         date: ["2026-10-17"],
-        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 },
+        image: "https://aespa.com/assets/lemonade/slides/0_aespa/0518/(2)aespa-LEMONADE.jpg"
     },
     { tour: 9,
         name: "Phuket",
         country: "Thailand",
         place: "Phuket Beach",
         date: ["2026-10-24", "2026-10-25"],
-        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
-    },
-    { tour: 10,
-        name: "Hua Hin",
-        country: "Thailand",
-        place: "Hua Hin Beach",
-        date: ["2026-10-31"],
-        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 },
+        image: "https://aespa.com/assets/lemonade/slides/1_karina/0518/(3)karina-lemonade.jpg"
     },
 ];
