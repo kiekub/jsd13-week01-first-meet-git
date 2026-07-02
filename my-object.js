@@ -1,6 +1,6 @@
 //"Pizza" , "Malatang" , "Pad Thai", "Burger" , "Sushi" , "Somtam"
 
-let foodsDatabase = [
+let foodDatabase = [
     { id: 1,
         name: "Pizza",
         cuisin: "Italian",
