@@ -5,7 +5,6 @@ let citiesDatabase = [
         place: "Seoul Olympic Stadium",
         date: ["2026-08-01", "2026-08-02"],
         price: { VIP: 30000, Regular: 20000, Economy: 15000 },
-        image: "https://aespa.com/assets/lemonade/slides/0_aespa/0518/(1)aespa-LEMONADE.jpg"
     },
     { tour: 2,
         name: "Tokyo",
@@ -13,7 +12,6 @@ let citiesDatabase = [
         place: "Tokyo Dome",
         date: ["2026-08-22", "2026-08-23"],
         price: { VIP: 50000, Regular: 30000, Economy: 20000 },
-        image: "https://aespa.com/assets/lemonade/slides/0_aespa/0518/(2)aespa-LEMONADE.jpg"
     },
     { tour: 3,
         name: "Bangkok",
@@ -21,7 +19,6 @@ let citiesDatabase = [
         place: "Rajamangala National Stadium",
         date: ["2026-09-04", "2026-09-05" , "2026-09-06"],
         price: { VIP: 15000, Regular: 10000, Economy: 8000 },
-        image: "https://aespa.com/assets/lemonade/slides/1_karina/0518/(3)karina-lemonade.jpg"
     },
     { tour: 4,
         name: "Pattaya",
@@ -29,7 +26,7 @@ let citiesDatabase = [
         place: "Pattaya Beach",
         date: ["2026-09-11", "2026-09-12"],
         price: { VIP: 15000, Regular: 8000, Economy: 5000 },
-        image: "https://aespa.com/assets/lemonade/slides/2_giselle/0518/(4)giselle-lemonade.jpg"
+
     },
     { tour: 5,
         name: "Khon Kaen",
@@ -37,7 +34,6 @@ let citiesDatabase = [
         place: "Khon Kaen Stadium",
         date: ["2026-09-19"],
         price: { VIP: 10000, Regular: 7000, Economy: 5000 },
-        image: "https://aespa.com/assets/lemonade/slides/3_winter/0518/(9)winter-lemonade.jpg"
     },
     { tour: 6,
         name: "Udon Thani",
@@ -45,7 +41,6 @@ let citiesDatabase = [
         place: "Udon Thani Stadium",
         date: ["2026-09-25", "2026-09-26"],
         price: { VIP: 10000, Regular: 7000, Economy: 5000 },
-        image: "https://aespa.com/assets/lemonade/slides/4_ningning/0518/(3)ningning-lemonade.jpg"
     },
     { tour: 7,
         name: "Chiang Mai",
@@ -53,7 +48,6 @@ let citiesDatabase = [
         place: "Chiang Mai Stadium",
         date: ["2026-10-03", "2026-10-04"],
         price: { VIP: 10000, Regular: 7000, Economy: 5000 },
-        image: "https://aespa.com/assets/lemonade/slides/0_aespa/0518/(1)aespa-LEMONADE.jpg"
     },
     { tour: 8,
         name: "Chiang Rai",
@@ -61,7 +55,6 @@ let citiesDatabase = [
         place: "Chiang Rai Stadium",
         date: ["2026-10-17"],
         price: { VIP: 10000, Regular: 7000, Economy: 5000 },
-        image: "https://aespa.com/assets/lemonade/slides/0_aespa/0518/(2)aespa-LEMONADE.jpg"
     },
     { tour: 9,
         name: "Phuket",
@@ -69,6 +62,5 @@ let citiesDatabase = [
         place: "Phuket Beach",
         date: ["2026-10-24", "2026-10-25"],
         price: { VIP: 10000, Regular: 7000, Economy: 5000 },
-        image: "https://aespa.com/assets/lemonade/slides/1_karina/0518/(3)karina-lemonade.jpg"
     },
 ];
