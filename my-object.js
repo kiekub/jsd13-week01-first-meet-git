@@ -1,45 +1,74 @@
-//"Pizza" , "Malatang" , "Pad Thai", "Burger" , "Sushi" , "Somtam"
+//"Seoul" , "Tokyo" , "Bangkok", "Pattaya" , "Khon Kaen" , "Udon Thani" , "Chiang Mai" , "Chiang Rai" , "Phuket" , "Hua Hin"
 
-let foodDatabase = [
-    { id: 1,
-        name: "Pizza",
-        cuisin: "Italian",
-        origin: "Italy",
-        vegetarian: false,  
+let citiesDatabase = [
+    { tour: 1,
+        name: "Seoul",
+        country: "South Korea",
+        place: "Seoul Olympic Stadium",
+        date: ["2026-08-01", "2026-08-02"],
+        price: { VIP: 30000, Regular: 20000, Economy: 15000 }
     },
-    { id: 2,
-        name: "Malatang",
-        cuisin: "Chinese",
-        origin: "China",
-        vegetarian: false,
-        price: 249
+    { tour: 2,
+        name: "Tokyo",
+        country: "Japan",
+        place: "Tokyo Dome",
+        date: ["2026-08-22", "2026-08-23"],
+        price: { VIP: 50000, Regular: 30000, Economy: 20000 }
     },
-    { id: 3,
-        name: "Pad Thai",
-        cuisin: "Thai",
-        origin: "Thailand",
-        vegetarian: false,
-        price: 249
+    { tour: 3,
+        name: "Bangkok",
+        country: "Thailand",
+        place: "Rajamangala National Stadium",
+        date: ["2026-09-04", "2026-09-05" , "2026-09-06"],
+        price: { VIP: 15000, Regular: 10000, Economy: 8000 }
     },
-    { id: 4,
-        name: "Burger",
-        cuisin: "American",
-        origin: "United States",
-        vegetarian: false,
-        price: 249
+    { tour: 4,
+        name: "Pattaya",
+        country: "Thailand",
+        place: "Pattaya Beach",
+        date: ["2026-09-11", "2026-09-12"],
+        price: { VIP: 15000, Regular: 8000, Economy: 5000 }
     },
-    { id: 5,
-        name: "Sushi",
-        cuisin: "Japanese",
-        origin: "Japan",
-        vegetarian: false,
-        price: 249
+    { tour: 5,
+        name: "Khon Kaen",
+        country: "Thailand",
+        place: "Khon Kaen Stadium",
+        date: ["2026-09-19"],
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
     },
-    { id: 6,
-        name: "Somtam",
-        cuisin: "Thai",
-        origin: "Thailand",
-        vegetarian: true,
-        price: 249
+    { tour: 6,
+        name: "Udon Thani",
+        country: "Thailand",
+        place: "Udon Thani Stadium",
+        date: ["2026-09-25", "2026-09-26"],
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
+    },
+    { tour: 7,
+        name: "Chiang Mai",
+        country: "Thailand",
+        place: "Chiang Mai Stadium",
+        date: ["2026-10-03", "2026-10-04"],
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
+    },
+    { tour: 8,
+        name: "Chiang Rai",
+        country: "Thailand",
+        place: "Chiang Rai Stadium",
+        date: ["2026-10-17"],
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
+    },
+    { tour: 9,
+        name: "Phuket",
+        country: "Thailand",
+        place: "Phuket Beach",
+        date: ["2026-10-24", "2026-10-25"],
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
+    },
+    { tour: 10,
+        name: "Hua Hin",
+        country: "Thailand",
+        place: "Hua Hin Beach",
+        date: ["2026-10-31"],
+        price: { VIP: 10000, Regular: 7000, Economy: 5000 }
     },
 ];
