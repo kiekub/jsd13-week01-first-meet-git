@@ -1,3 +1,3 @@
 let food = ["Pizza" , "Malatang" , "Pad Thai", "Burger" , "Sushi" , "Somtam"];
 
-console.log(foods);
+console.log(food);
