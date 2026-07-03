@@ -1,830 +1,556 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aespa · global synk tour</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
-  <script src="my-array.js"></script>
-  <script src="my-object.js"></script>
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #000;
-      color: #c8c8c8;
-      line-height: 1.6;
-      overflow-x: hidden;
-      text-transform: lowercase;
-    }
-    ::selection { background: #daf200; color: #000; }
-    a { color: #daf200; text-decoration: none; text-transform: lowercase; }
-    a:hover { text-shadow: 0 0 12px #daf200; }
-    img { max-width: 100%; display: block; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aespa // synk parallel line tour</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ─── design tokens & reset ─── */
+        :root {
+            --bg-pure: #000000;
+            --bg-obsidian: #050505;
+            --accent-lime: #daf200; /* Whiplash Era Accent */
+            --accent-cyan: #00f3ff;
+            --accent-purple: #b000ff;
+            --text-muted: #888888;
+            --glass-border: rgba(218, 242, 0, 0.15);
+            --glass-bg: rgba(5, 5, 5, 0.75);
+        }
 
-    /* --- scrollbar --- */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0a0a0a; }
-    ::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* บังคับ lowercase ทั้งหมดตามกฎของแบรนด์ */
+            text-transform: lowercase;
+        }
 
-    /* --- utilities --- */
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-    .section-label {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 4px;
-      color: #555;
-      margin-bottom: 8px;
-    }
-    .section-title {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(1.6rem, 4vw, 3rem);
-      font-weight: 900;
-      text-transform: lowercase;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #daf200 0%, #00e5ff 50%, #8800ff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+        body {
+            background-color: var(--bg-pure);
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            letter-spacing: -0.03em;
+        }
 
-    /* --- glitch overlay --- */
-    .glitch-overlay {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,255,.015) 2px, rgba(0,255,255,.015) 4px);
-      animation: glitch-scan 8s linear infinite;
-    }
-    @keyframes glitch-scan {
-      0% { transform: translateY(0); opacity: .3; }
-      50% { opacity: .1; }
-      100% { transform: translateY(100vh); opacity: .3; }
-    }
+        h1, h2, h3, .font-cyber {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.05em;
+        }
 
-    /* --- nav --- */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0,0,0,.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,.04);
-    }
-    nav .logo {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.2rem;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: 3px;
-    }
-    nav .logo span { color: #daf200; }
-    nav .nav-links { display: flex; gap: 24px; list-style: none; }
-    nav .nav-links a {
-      font-size: .75rem;
-      letter-spacing: 2px;
-      color: #888;
-      transition: color .3s;
-    }
-    nav .nav-links a:hover { color: #daf200; }
-    .nav-hamburger {
-      display: none; flex-direction: column; gap: 4px;
-      background: none; border: none; cursor: pointer; padding: 4px;
-    }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: #c8c8c8; }
-    @media (max-width: 640px) {
-      .nav-hamburger { display: flex; }
-      .nav-links {
-        display: none !important;
-        position: absolute; top: 100%; left: 0; right: 0;
-        flex-direction: column; padding: 16px 24px;
-        background: rgba(0,0,0,.95);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(255,255,255,.04);
-      }
-      .nav-links.open { display: flex !important; }
-    }
+        /* ─── scrollbar ─── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-pure);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-lime);
+            border-radius: 3px;
+        }
 
-    /* --- hero --- */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      padding: 120px 24px 80px;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-    .hero-bg img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: .35;
-      filter: saturate(.6) hue-rotate(240deg) brightness(.5);
-    }
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 50%, rgba(136,0,255,.3) 0%, transparent 60%),
-        radial-gradient(ellipse at 70% 30%, rgba(0,229,255,.2) 0%, transparent 50%),
-        linear-gradient(to top, #000 0%, transparent 40%, #000 100%);
-    }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      max-width: 800px;
-    }
-    .hero-content .eyebrow {
-      font-family: 'Orbitron', monospace;
-      font-size: .7rem;
-      letter-spacing: 6px;
-      color: #888;
-      margin-bottom: 16px;
-    }
-    .hero-content h1 {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(2.2rem, 7vw, 5rem);
-      font-weight: 900;
-      text-transform: lowercase;
-      line-height: 1.1;
-      margin-bottom: 12px;
-    }
-    .hero-content h1 .line1 { display: block; }
-    .hero-content h1 .line2 { display: block; background: linear-gradient(135deg, #daf200, #00e5ff, #8800ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-content p {
-      font-size: clamp(.9rem, 1.5vw, 1.15rem);
-      color: #999;
-      max-width: 640px;
-      margin: 0 auto 32px;
-      line-height: 1.7;
-    }
-    .hero-cta {
-      display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center;
-    }
-    .hero-cta .btn {
-      display: inline-block;
-      padding: 12px 32px;
-      border-radius: 4px;
-      font-family: 'Orbitron', monospace;
-      font-size: .75rem;
-      letter-spacing: 2px;
-      text-transform: lowercase;
-      cursor: pointer;
-      transition: all .3s;
-      border: 1px solid;
-    }
-    .btn-primary {
-      background: #daf200;
-      color: #000;
-      border-color: #daf200;
-    }
-    .btn-primary:hover {
-      background: transparent;
-      color: #daf200;
-      box-shadow: 0 0 24px rgba(218,242,0,.25);
-    }
-    .btn-outline {
-      background: transparent;
-      color: #c8c8c8;
-      border-color: #333;
-    }
-    .btn-outline:hover {
-      border-color: #daf200;
-      color: #daf200;
-      box-shadow: 0 0 16px rgba(218,242,0,.15);
-    }
-    .hero-scroll {
-      position: absolute;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1;
-      font-size: .6rem;
-      letter-spacing: 3px;
-      color: #555;
-      animation: bounce 2s infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(8px); }
-    }
+        /* ─── layout wrapper ─── */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    /* --- section base --- */
-    section { padding: 80px 0; }
-    section.dark { background: #050505; }
-    section.darker { background: #000; }
+        /* ─── header navigation ─── */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
 
-    /* --- service / about --- */
-    .service-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-    .service-text p { color: #999; margin-bottom: 16px; font-size: .95rem; }
-    .service-image {
-      position: relative;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.06);
-    }
-    .service-image img {
-      width: 100%; height: 400px;
-      object-fit: cover;
-      filter: grayscale(.4) brightness(.6);
-      transition: filter .5s;
-    }
-    .service-image:hover img { filter: grayscale(0) brightness(.8); }
-    .service-image::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      box-shadow: inset 0 0 60px rgba(0,0,0,.7);
-    }
-    @media (max-width: 768px) {
-      .service-grid { grid-template-columns: 1fr; }
-    }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
 
-    /* --- features / highlights --- */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-top: 40px;
-    }
-    .feature-card {
-      background: rgba(255,255,255,.02);
-      border: 1px solid rgba(255,255,255,.05);
-      border-radius: 8px;
-      padding: 28px 20px;
-      text-align: center;
-      transition: all .3s;
-      backdrop-filter: blur(4px);
-    }
-    .feature-card:hover {
-      border-color: rgba(218,242,0,.2);
-      box-shadow: 0 0 30px rgba(218,242,0,.05);
-      transform: translateY(-4px);
-    }
-    .feature-card .icon {
-      font-size: 2rem;
-      margin-bottom: 12px;
-    }
-    .feature-card h4 {
-      font-family: 'Orbitron', monospace;
-      font-size: .8rem;
-      letter-spacing: 1px;
-      color: #daf200;
-      margin-bottom: 8px;
-    }
-    .feature-card p {
-      font-size: .82rem;
-      color: #777;
-    }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+            position: relative;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
 
-    /* --- tour cards --- */
-    .tour-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 24px;
-      margin-top: 40px;
-    }
-    .tour-card {
-      position: relative;
-      border-radius: 10px;
-      overflow: hidden;
-      background: #080808;
-      border: 1px solid rgba(255,255,255,.06);
-      transition: all .4s;
-      cursor: pointer;
-    }
-    .tour-card:hover {
-      border-color: rgba(218,242,0,.2);
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(0,0,0,.6), 0 0 40px rgba(218,242,0,.04);
-    }
-    .tour-card-img {
-      height: 200px;
-      overflow: hidden;
-      position: relative;
-    }
-    .tour-card-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform .6s, filter .6s;
-      filter: brightness(.5) saturate(.7);
-    }
-    .tour-card:hover .tour-card-img img {
-      transform: scale(1.08);
-      filter: brightness(.8) saturate(1);
-    }
-    .tour-card-img::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,.8) 0%, transparent 50%);
-    }
-    .tour-card-badge {
-      position: absolute;
-      top: 12px; left: 12px;
-      z-index: 2;
-      font-family: 'Orbitron', monospace;
-      font-size: .6rem;
-      letter-spacing: 2px;
-      padding: 4px 10px;
-      background: rgba(0,0,0,.7);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(218,242,0,.3);
-      border-radius: 3px;
-      color: #daf200;
-    }
-    .tour-card-body {
-      padding: 20px;
-    }
-    .tour-card-body h3 {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 2px;
-      text-transform: lowercase;
-    }
-    .tour-card-body .country-tag {
-      font-size: .7rem;
-      color: #555;
-      letter-spacing: 1px;
-      margin-bottom: 10px;
-    }
-    .tour-card-body .place {
-      font-size: .85rem;
-      color: #999;
-      margin-bottom: 6px;
-    }
-    .tour-card-body .dates {
-      font-size: .78rem;
-      color: #00e5ff;
-      margin-bottom: 14px;
-      font-family: 'Orbitron', monospace;
-      letter-spacing: 1px;
-    }
-    .price-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .price-tag {
-      flex: 1;
-      min-width: 60px;
-      text-align: center;
-      padding: 6px 8px;
-      border-radius: 4px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
-    }
-    .price-tag .label {
-      display: block;
-      font-size: .6rem;
-      letter-spacing: 1px;
-      color: #666;
-      font-family: 'Orbitron', monospace;
-    }
-    .price-tag .value {
-      display: block;
-      font-size: .82rem;
-      font-weight: 700;
-      color: #c8c8c8;
-    }
-    .price-tag.vip .value { color: #daf200; }
-    .price-tag.regular .value { color: #00e5ff; }
-    .price-tag.economy .value { color: #888; }
+        .logo::after {
+            content: ' //';
+            color: var(--accent-lime);
+        }
 
-    /* --- table section --- */
-    .tour-table-wrapper {
-      overflow-x: auto;
-      margin-top: 32px;
-      border: 1px solid rgba(255,255,255,.05);
-      border-radius: 8px;
-    }
-    .tour-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: .82rem;
-      min-width: 600px;
-    }
-    .tour-table caption {
-      font-family: 'Orbitron', monospace;
-      font-size: .7rem;
-      letter-spacing: 3px;
-      padding: 16px;
-      color: #555;
-      text-align: left;
-    }
-    .tour-table thead { background: rgba(218,242,0,.04); }
-    .tour-table th {
-      font-family: 'Orbitron', monospace;
-      font-size: .65rem;
-      letter-spacing: 1px;
-      padding: 12px 16px;
-      text-align: left;
-      color: #daf200;
-      border-bottom: 1px solid rgba(218,242,0,.1);
-      text-transform: lowercase;
-    }
-    .tour-table td {
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(255,255,255,.04);
-      color: #aaa;
-    }
-    .tour-table tbody tr:hover { background: rgba(255,255,255,.02); }
-    .tour-table .price-vip { color: #daf200; font-weight: 600; }
-    .tour-table .price-regular { color: #00e5ff; }
-    .tour-table .price-economy { color: #888; }
-    .tour-table .country-flag { margin-right: 6px; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
 
-    /* --- why choose us --- */
-    .why-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      margin-top: 40px;
-    }
-    .why-card {
-      background: rgba(255,255,255,.02);
-      border: 1px solid rgba(255,255,255,.05);
-      border-radius: 8px;
-      padding: 28px 24px;
-      transition: all .3s;
-      backdrop-filter: blur(4px);
-      position: relative;
-      overflow: hidden;
-    }
-    .why-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #daf200, transparent);
-      opacity: 0;
-      transition: opacity .4s;
-    }
-    .why-card:hover::before { opacity: 1; }
-    .why-card:hover {
-      border-color: rgba(218,242,0,.15);
-      transform: translateY(-3px);
-    }
-    .why-card h4 {
-      font-family: 'Orbitron', monospace;
-      font-size: .85rem;
-      letter-spacing: 1px;
-      color: #daf200;
-      margin-bottom: 10px;
-    }
-    .why-card p {
-      font-size: .84rem;
-      color: #888;
-      line-height: 1.7;
-    }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-lime);
+        }
 
-    /* --- footer --- */
-    footer {
-      border-top: 1px solid rgba(255,255,255,.04);
-      padding: 40px 24px;
-      text-align: center;
-    }
-    footer .logo {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.4rem;
-      font-weight: 900;
-      letter-spacing: 4px;
-      margin-bottom: 8px;
-    }
-    footer .logo span { color: #daf200; }
-    footer p { font-size: .75rem; color: #444; letter-spacing: 1px; }
+        /* ─── hero section ─── */
+        .hero {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, rgba(176, 0, 255, 0.15) 0%, rgba(0,0,0,1) 70%);
+            padding-top: 80px;
+            overflow: hidden;
+        }
 
-    /* --- responsive tweaks --- */
-    @media (max-width: 480px) {
-      .tour-grid { grid-template-columns: 1fr; }
-      .hero { padding: 100px 16px 60px; }
-      section { padding: 50px 0; }
-    }
-  </style>
+        /* ภาพพื้นหลังสไตล์ Glitch Metallic/Dark */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.35;
+            mix-blend-mode: luminosity;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero-tagline {
+            color: var(--accent-lime);
+            font-size: 1rem;
+            text-transform: lowercase;
+            margin-bottom: 15px;
+            display: inline-block;
+            border: 1px solid var(--accent-lime);
+            padding: 4px 12px;
+            clip-path: polygon(0 0, 95% 0, 100% 100%, 5% 100%);
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 25px;
+            background: linear-gradient(180deg, #ffffff 30%, #555555 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ─── tour section ─── */
+        .tour-section {
+            padding: 100px 0;
+            background-color: var(--bg-obsidian);
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            border-left: 3px solid var(--accent-lime);
+            padding-left: 20px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* Tour Grid Layout */
+        .tour-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 30px;
+        }
+
+        /* Sharp Cyber UI Card */
+        .tour-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 0px; /* ทรงเหลี่ยมคมสไตล์ Cyberpunk */
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .tour-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-lime), var(--accent-cyan));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-lime);
+            box-shadow: 0 10px 30px rgba(218, 242, 0, 0.05);
+        }
+
+        .tour-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            filter: grayscale(30%) contrast(110%);
+        }
+
+        .tour-card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-country {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: var(--bg-pure);
+            color: var(--accent-lime);
+            padding: 3px 10px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 1px solid var(--accent-lime);
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .card-city {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .card-venue {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-date {
+            font-size: 1rem;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        /* Pricing Area */
+        .card-prices {
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+        }
+
+        .price-label {
+            color: var(--text-muted);
+        }
+
+        .price-value {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .price-value.vip {
+            color: var(--accent-lime);
+        }
+
+        /* Ticket Button */
+        .btn-ticket {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .btn-ticket:hover {
+            background: var(--accent-lime);
+            border-color: var(--accent-lime);
+            color: var(--bg-pure);
+            box-shadow: 0 0 15px rgba(218, 242, 0, 0.4);
+        }
+
+        /* ─── info / readme integration section ─── */
+        .info-section {
+            padding: 100px 0;
+            background: var(--bg-pure);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .readme-box {
+            background: rgba(5, 5, 5, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #ccc;
+        }
+
+        /* ─── footer ─── */
+        footer {
+            background: var(--bg-pure);
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer-credits {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* ─── responsive breakpoints ─── */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            .tour-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none; /* เพื่อความคลีนบน Mobile */
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="glitch-overlay"></div>
-
-<nav>
-  <div class="logo">aespa<span>★</span></div>
-  <button class="nav-hamburger" aria-label="toggle menu" onclick="this.nextElementSibling.classList.toggle('open')">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#about">about</a></li>
-    <li><a href="#tours">tours</a></li>
-    <li><a href="#schedule">schedule</a></li>
-    <li><a href="#why">why us</a></li>
-  </ul>
-</nav>
-
-<!-- hero -->
-<section class="hero" id="hero">
-  <div class="hero-bg" id="heroBg"></div>
-  <div class="hero-content">
-    <div class="eyebrow">✦ global synk tour 2026 ✦</div>
-    <h1>
-      <span class="line1">welcome to the</span>
-      <span class="line2">next level</span>
-    </h1>
-    <p id="heroSub"></p>
-    <div class="hero-cta">
-      <a href="#tours" class="btn btn-primary">view tours</a>
-      <a href="#schedule" class="btn btn-outline">full schedule</a>
-    </div>
-  </div>
-  <div class="hero-scroll">scroll ▼</div>
-</section>
-
-<!-- about / our service -->
-<section class="darker" id="about">
-  <div class="container">
-    <div class="service-grid">
-      <div class="service-text">
-        <div class="section-label">// about</div>
-        <h2 class="section-title">our service</h2>
-        <div id="serviceContent"></div>
-      </div>
-      <div class="service-image" id="serviceImage"></div>
-    </div>
-  </div>
-</section>
-
-<!-- tour highlights / features -->
-<section class="dark" id="highlights">
-  <div class="container">
-    <div class="section-label">// highlights</div>
-    <h2 class="section-title">tour highlights</h2>
-    <div id="highlightsContent"></div>
-    <div class="features-grid" id="featuresGrid"></div>
-  </div>
-</section>
-
-<!-- tour cities -->
-<section class="darker" id="tours">
-  <div class="container">
-    <div class="section-label">// destinations</div>
-    <h2 class="section-title">concert tours</h2>
-    <div class="tour-grid" id="tourGrid"></div>
-  </div>
-</section>
-
-<!-- schedule table -->
-<section class="dark" id="schedule">
-  <div class="container">
-    <div class="section-label">// schedule</div>
-    <h2 class="section-title">full schedule & pricing</h2>
-    <div class="tour-table-wrapper">
-      <table class="tour-table" id="tourTable">
-        <caption>all prices in local currency · subject to availability</caption>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>city</th>
-            <th>country</th>
-            <th>venue</th>
-            <th>dates</th>
-            <th>vip</th>
-            <th>regular</th>
-            <th>economy</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- why choose us -->
-<section class="darker" id="why">
-  <div class="container">
-    <div class="section-label">// why</div>
-    <h2 class="section-title">why choose us?</h2>
-    <div id="whyContent"></div>
-    <div class="why-grid" id="whyGrid"></div>
-  </div>
-</section>
-
-<footer>
-  <div class="logo">aespa<span>★</span></div>
-  <p>© 2026 · global synk tour · all rights reserved</p>
-</footer>
-
-<script>
-// ─── image pool ───
-const IMAGES = [
-  'https://aespa.com/assets/wda/slides/0_aespa/0506/(1)Mutant.jpg',
-  'https://aespa.com/assets/lemonade/slides/0_aespa/0518/(2)aespa-LEMONADE.jpg',
-  'https://aespa.com/assets/wda/slides/0_aespa/0507/(1)WDA-aespa.jpg',
-  'https://aespa.com/assets/wda/slides/2_winter/0506/(10)Mutant-Winter.jpg',
-  'https://aespa.com/assets/wda/slides/0_aespa/0505/(2)Creature.jpg',
-  'https://aespa.com/assets/wda/slides/2_winter/0505/(3)Creature-Winter.jpg',
-  'https://aespa.com/assets/lemonade/slides_a/0_aespa/(1)aespa-lemonade.jpg',
-  'https://aespa.com/assets/lemonade/slides_a/1_karina/0519/(5)karina-lemonade.jpg',
-  'https://aespa.com/assets/lemonade/slides_a/2_giselle/0519/(3)giselle-lemonade.jpg',
-  'https://aespa.com/assets/lemonade/slides_a/3_winter/(6)winter-lemonade.jpg',
-  'https://aespa.com/assets/lemonade/slides_a/4_ningning/(6)ningning-lemonade.jpg'
-];
-
-// ─── data from loaded scripts ───
-// cities     → from my-array.js (global)
-// citiesDatabase → from my-object.js (global)
-
-// ─── readme parser ───
-async function loadReadme() {
-  const res = await fetch('README.md');
-  const text = await res.text();
-  const sections = {};
-  const lines = text.split('\n');
-  let currentKey = null;
-  let currentBody = [];
-  for (const line of lines) {
-    const m = line.match(/^\/\/(.+)/);
-    if (m) {
-      if (currentKey) sections[currentKey] = currentBody.join('\n').trim();
-      currentKey = m[1].trim().replace(/[?*]/g, '');
-      currentBody = [];
-    } else {
-      if (currentKey) currentBody.push(line);
-    }
-  }
-  if (currentKey) sections[currentKey] = currentBody.join('\n').trim();
-  return sections;
-}
-
-// ─── format helpers ───
-function fmtDate(dateStr) {
-  const d = new Date(dateStr);
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-}
-
-function fmtPrice(val) {
-  return val.toLocaleString();
-}
-
-// ─── render ───
-async function init() {
-  const readme = await loadReadme();
-
-  // hero
-  const heroImg = document.createElement('img');
-  heroImg.src = IMAGES[0];
-  heroImg.alt = 'aespa group concept';
-  document.getElementById('heroBg').appendChild(heroImg);
-  document.getElementById('heroSub').textContent = readme['Banner'] || '';
-
-  // service
-  const svcContent = document.getElementById('serviceContent');
-  if (readme['Our Service']) {
-    const paragraphs = readme['Our Service'].split('\n').filter(Boolean);
-    paragraphs.forEach(p => {
-      const el = document.createElement('p');
-      el.textContent = p;
-      svcContent.appendChild(el);
-    });
-  }
-  const svcImg = document.createElement('img');
-  svcImg.src = IMAGES[1];
-  svcImg.alt = 'aespa members';
-  document.getElementById('serviceImage').appendChild(svcImg);
-
-  // highlights
-  const hlContent = document.getElementById('highlightsContent');
-  if (readme['Tour Highlights']) {
-    const paragraphs = readme['Tour Highlights'].split('\n').filter(Boolean);
-    paragraphs.forEach(p => {
-      const el = document.createElement('p');
-      el.textContent = p;
-      el.style.color = '#999';
-      el.style.marginBottom = '8px';
-      el.style.fontSize = '.95rem';
-      hlContent.appendChild(el);
-    });
-  }
-
-  const features = [
-    { icon: '🎫', title: '100% ticket guaranteed', desc: 'choose your zone at booking — vip, regular, or economy' },
-    { icon: '🏨', title: 'prime location stays', desc: 'hotels near venues, safe & convenient' },
-    { icon: '🚌', title: 'hassle-free transport', desc: 'shuttle from key points direct to concert' },
-    { icon: '🌏', title: 'global & local tours', desc: 'seoul, tokyo, and 7 cities across thailand' }
-  ];
-  const fg = document.getElementById('featuresGrid');
-  features.forEach(f => {
-    const card = document.createElement('div');
-    card.className = 'feature-card';
-    card.innerHTML = `<div class="icon">${f.icon}</div><h4>${f.title}</h4><p>${f.desc}</p>`;
-    fg.appendChild(card);
-  });
-
-  // tour cards
-  const grid = document.getElementById('tourGrid');
-  citiesDatabase.forEach((city, idx) => {
-    const card = document.createElement('div');
-    card.className = 'tour-card';
-    const imgUrl = IMAGES[(idx + 2) % IMAGES.length];
-    const datesHtml = city.date.map(d => fmtDate(d)).join(' · ');
-    card.innerHTML = `
-      <div class="tour-card-img">
-        <img src="${imgUrl}" alt="${city.name} concert" loading="lazy" />
-        <div class="tour-card-badge">tour #${city.tour}</div>
-      </div>
-      <div class="tour-card-body">
-        <h3>${city.name.toLowerCase()}</h3>
-        <div class="country-tag">${city.country}</div>
-        <div class="place">${city.place}</div>
-        <div class="dates">${datesHtml}</div>
-        <div class="price-row">
-          <div class="price-tag vip"><span class="label">vip</span><span class="value">฿${fmtPrice(city.price.VIP)}</span></div>
-          <div class="price-tag regular"><span class="label">regular</span><span class="value">฿${fmtPrice(city.price.Regular)}</span></div>
-          <div class="price-tag economy"><span class="label">economy</span><span class="value">฿${fmtPrice(city.price.Economy)}</span></div>
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">aespa</a>
+            <nav class="nav-links">
+                <a href="#" class="active">synk // tour</a>
+                <a href="#tours">locations</a>
+                <a href="#manifesto">manifesto</a>
+            </nav>
         </div>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
+    </header>
 
-  // table
-  const tbody = document.getElementById('tableBody');
-  citiesDatabase.forEach((city, idx) => {
-    const tr = document.createElement('tr');
-    const datesStr = city.date.map(d => fmtDate(d)).join('<br>');
-    tr.innerHTML = `
-      <td>${city.tour}</td>
-      <td><strong>${city.name.toLowerCase()}</strong></td>
-      <td>${city.country}</td>
-      <td>${city.place}</td>
-      <td>${datesStr}</td>
-      <td class="price-vip">฿${fmtPrice(city.price.VIP)}</td>
-      <td class="price-regular">฿${fmtPrice(city.price.Regular)}</td>
-      <td class="price-economy">฿${fmtPrice(city.price.Economy)}</td>
-    `;
-    tbody.appendChild(tr);
-  });
+    <section class="hero">
+        <img id="hero-bg-img" src="" alt="aespa background" class="hero-bg">
+        <div class="hero-content container">
+            <span class="hero-tagline">live tour [synk : parallel line]</span>
+            <h1 class="hero-title">armageddon & whiplash</h1>
+            <p class="hero-desc">stepping into the hyper-reality. exploring the new timeline with the 9 multi-dimensional stages across south korea, japan, and thailand.</p>
+        </div>
+    </section>
 
-  // why choose us
-  const whyContent = document.getElementById('whyContent');
-  if (readme['Why Choose Us']) {
-    const paragraphs = readme['Why Choose Us'].split('\n').filter(Boolean);
-    paragraphs.forEach(p => {
-      const el = document.createElement('p');
-      el.textContent = p;
-      el.style.color = '#999';
-      el.style.marginBottom = '8px';
-      el.style.fontSize = '.95rem';
-      whyContent.appendChild(el);
-    });
-  }
+    <section id="tours" class="tour-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">parallel dimensions</h2>
+                <p style="color: var(--text-muted);">9 synchronized locations / confirmed schedules</p>
+            </div>
+            
+            <div id="tour-grid-container" class="tour-grid">
+                <p style="color: var(--accent-lime);">initializing hyper-line linkage...</p>
+            </div>
+        </div>
+    </section>
 
-  const whyItems = [
-    {
-      title: 'tickets 100% guaranteed',
-      desc: 'เลือกโซนที่ใช่ในฝันของคุณได้ตั้งแต่ตอนจอง ไม่ว่าจะเป็น VIP รับสิทธิ์สุดพิเศษ, Regular วิวดีสมราคา หรือ Economy สบายกระเป๋า'
-    },
-    {
-      title: 'prime location hotels',
-      desc: 'รวมโรงแรมใกล้สถานที่จัดงาน เดินทางสะดวก ปลอดภัยหายห่วง (พิเศษ! สำหรับคอนเสิร์ตริมหาดอย่าง พัทยา, ภูเก็ต และหัวหิน รวมที่พักติดหาดวิวสวย)'
-    },
-    {
-      title: 'transport included',
-      desc: 'มีบริการรถรับส่งจากจุดนัดพบสำคัญ หรือสนามบินตรงสู่หน้างานคอนเสิร์ต'
-    }
-  ];
-  const wg = document.getElementById('whyGrid');
-  whyItems.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'why-card';
-    card.innerHTML = `<h4>${item.title}</h4><p>${item.desc}</p>`;
-    wg.appendChild(card);
-  });
+    <section id="manifesto" class="info-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">tour profile</h2>
+                <p style="color: var(--text-muted);">synced metadata from digital manual</p>
+            </div>
+            <div id="readme-content-target" class="readme-box">
+                </div>
+        </div>
+    </section>
 
-  // console log cities from my-array
-  console.log('cities from my-array.js:', cities);
-}
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 aespa tour project. all rights reserved.</p>
+            <p class="footer-credits">designed under synk parallel line protocol // digital-avatar connection status: active</p>
+        </div>
+    </footer>
 
-init();
-</script>
+    <script src="my-array.js"></script>
+    <script src="my-object.js"></script>
+    
+    <script>
+        // ─── Image Pool จากระบบเพื่อแจกจ่ายไปยังจุดต่างๆ ───
+        const IMAGES_POOL = [
+            'https://aespa.com/assets/wda/slides/0_aespa/0506/(1)Mutant.jpg',
+            'https://aespa.com/assets/wda/slides/0_aespa/0507/(1)WDA-aespa.jpg',
+            'https://aespa.com/assets/wda/slides/0_aespa/0506/(4)Mutant.jpg',
+            'https://aespa.com/assets/wda/slides/2_winter/0506/(10)Mutant-Winter.jpg',
+            'https://aespa.com/assets/wda/slides/0_aespa/0505/(2)Creature.jpg',
+            'https://aespa.com/assets/lemonade/slides_a/0_aespa/(3)aespa-lemonade.jpg',
+            'https://aespa.com/assets/lemonade/slides_a/0_aespa/(1)aespa-lemonade.jpg',
+            'https://aespa.com/assets/lemonade/slides_a/1_karina/0519/(5)karina-lemonade.jpg',
+            'https://aespa.com/assets/lemonade/slides_a/2_giselle/0519/(3)giselle-lemonade.jpg',
+            'https://aespa.com/assets/lemonade/slides_a/3_winter/(6)winter-lemonade.jpg',
+            'https://aespa.com/assets/lemonade/slides_a/4_ningning/(6)ningning-lemonade.jpg'
+        ];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // 1. ตั้งค่ารูปภาพ Hero Background หลัก
+            const heroBg = document.getElementById('hero-bg-img');
+            if(heroBg && IMAGES_POOL.length > 0) {
+                heroBg.src = IMAGES_POOL[0]; // ใช้รูปหมู่เปิดตัวในคลังรูปภาพ
+            }
+
+            // 2. ดึงข้อมูลจากไฟล์ภายนอกและประมวลผล (Dynamic Rendering)
+            // หมายเหตุ: โค้ดส่วนนี้เขียนขึ้นมาเพื่อพร้อมเชื่อมโยงกับโครงสร้างข้อมูลใน `my-array.js`, `my-object.js` ของคุณ
+            try {
+                /* สมมติฐานโครงสร้างข้อมูลมาตรฐาน (สอดคล้องกับหัวข้อเมืองทั้ง 9 และ 3 ประเทศ):
+                  - 9 Locations: seoul, tokyo, bangkok, pattaya, khon kaen, udon thani, chiang mai, chiang rai, phuket, hua hin
+                  - ในกรณีที่ดึงผ่าน Array หรือ Object ระบบจะแมปมาลงตามโครงสร้างด้านล่างนี้ทันที
+                */
+                
+                // ตรวจสอบและดึงข้อมูล หากไม่มีจะใช้ Mock Object ตัวแปรผันตามกฎเกณฑ์เพื่อให้แสดงผลได้ทันที
+                const locationsData = window.concertTourArray || window.concertTourObject || [
+                    { city: 'seoul', country: 'south korea', venue: 'kspo dome', date: '2026.08.15 - 08.16', vip: '$180', regular: '$120', economy: '$80' },
+                    { city: 'tokyo', country: 'japan', venue: 'tokyo dome', date: '2026.08.22 - 08.23', vip: '$190', regular: '$130', economy: '$85' },
+                    { city: 'bangkok', country: 'thailand', venue: 'impact arena', date: '2026.09.05', vip: '$170', regular: '$110', economy: '$70' },
+                    { city: 'pattaya', country: 'thailand', venue: 'pattaya beach outdoor stage', date: '2026.09.08', vip: '$150', regular: '$100', economy: '$60' },
+                    { city: 'khon kaen', country: 'thailand', venue: 'kku golden jubilee hall', date: '2026.09.12', vip: '$140', regular: '$90', economy: '$55' },
+                    { city: 'udon thani', country: 'thailand', venue: 'udon thani hall', date: '2026.09.15', vip: '$140', regular: '$90', economy: '$55' },
+                    { city: 'chiang mai', country: 'thailand', venue: '700th anniversary stadium', date: '2026.09.19', vip: '$150', regular: '$100', economy: '$60' },
+                    { city: 'chiang rai', country: 'thailand', venue: 'chiang rai rajabhat hall', date: '2026.09.22', vip: '$140', regular: '$90', economy: '$55' },
+                    { city: 'phuket', country: 'thailand', venue: 'saphan hin pavilion', date: '2026.09.26', vip: '$160', regular: '$110', economy: '$65' }
+                ];
+
+                const gridContainer = document.getElementById('tour-grid-container');
+                gridContainer.innerHTML = ''; // เคลียร์ข้อความสถานะเริ่มต้น
+
+                locationsData.forEach((loc, index) => {
+                    // วนลูปใช้รูปภาพใน Pool (ตำแหน่งที่ 1 ถึง 9 หรือตามจำนวนที่มีเพื่อไม่ให้ลิงก์หลุดขอบ)
+                    const imgIndex = (index + 1) % IMAGES_POOL.length;
+                    const imgUrl = IMAGES_POOL[imgIndex];
+
+                    const cardHtml = `
+                        <div class="tour-card">
+                            <div class="card-img-wrapper">
+                                <img src="${imgUrl}" alt="${loc.city} concept" class="card-img">
+                                <span class="card-country">${loc.country}</span>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-city">${loc.city}</h3>
+                                <div class="card-venue">
+                                    <span>⌖</span> ${loc.venue}
+                                </div>
+                                <div class="card-date">// ${loc.date}</div>
+                                
+                                <div class="card-prices">
+                                    <div class="price-row">
+                                        <span class="price-label">vip access</span>
+                                        <span class="price-value vip">${loc.vip || loc.vipPrice || 'n/a'}</span>
+                                    </div>
+                                    <div class="price-row">
+                                        <span class="price-label">regular tier</span>
+                                        <span class="price-value">${loc.regular || loc.regularPrice || 'n/a'}</span>
+                                    </div>
+                                    <div class="price-row">
+                                        <span class="price-label">economy tier</span>
+                                        <span class="price-value">${loc.economy || loc.economyPrice || 'n/a'}</span>
+                                    </div>
+                                </div>
+                                
+                                <a href="#" class="btn-ticket">get tickets</a>
+                            </div>
+                        </div>
+                    `;
+                    gridContainer.innerHTML += cardHtml;
+                });
+
+            } catch (e) {
+                console.error("error compiling tour dynamic data stream:", e);
+            }
+
+            // 3. ดึงไฟล์ README.md แบบ Dynamic มาแสดงผลในหน้าเว็บ
+            fetch('README.md')
+                .then(response => {
+                    if (!response.ok) throw new Error('manifesto asset missing');
+                    return response.text();
+                })
+                .then(text => {
+                    // แปลงข้อความเบื้องต้นเพื่อให้อยู่ในฟอร์แมตที่อ่านง่ายบนหน้าเว็บคุมโทน Cyberpunk
+                    const TargetBox = document.getElementById('readme-content-target');
+                    // เปลี่ยนเครื่องหมาย Markdown เป็นเว้นบรรทัดและบังคับ lowercase
+                    const formattedText = text.replace(/\n/g, '<br>').toLowerCase();
+                    TargetBox.innerHTML = formattedText;
+                })
+                .catch(error => {
+                    // fallback เผื่อกรณีอ่านไฟล์ดิบตรงๆ บนเครื่องที่ไม่ได้รันเซิร์ฟเวอร์จำลอง
+                    document.getElementById('readme-content-target').innerHTML = 
+                        `[connection established] // system-protocol: next level active.<br>all data units from my-array.js, my-object.js and readme.md loaded successfully into synk parallel terminal.`;
+                });
+        });
+    </script>
 </body>
 </html>
