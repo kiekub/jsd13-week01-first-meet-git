@@ -944,7 +944,7 @@ try {
 
 // ตรวจสอบและดึงข้อมูล หากไม่มีจะใช้ Mock Object ตัวแปรผันตามกฎเกณฑ์เพื่อให้แสดงผลได้ทันที
 
-const locationsData = window.concertTourArray || window.concertTourObject || [
+const locationsData = typeof citiesDatabase !== 'undefined' ? citiesDatabase : [
 
 { city: 'seoul', country: 'south korea', venue: 'kspo dome', date: '2026.08.15 - 08.16', vip: '$180', regular: '$120', economy: '$80' },
 
@@ -1009,33 +1009,33 @@ const cardHtml = `
 <div class="card-date">// ${loc.date}</div>
 
 
-<div class="card-prices">
+          <div class="card-prices">
 
-<div class="price-row">
+            <div class="price-row">
 
-<span class="price-label">vip access</span>
+              <span class="price-label">vip access</span>
 
-<span class="price-value vip">${loc.vip || loc.vipPrice || 'n/a'}</span>
+              <span class="price-value vip">${loc.price ? loc.price.VIP : 'n/a'} ${loc.currency || ''}</span>
 
-</div>
+            </div>
 
-<div class="price-row">
+            <div class="price-row">
 
-<span class="price-label">regular tier</span>
+              <span class="price-label">regular tier</span>
 
-<span class="price-value">${loc.regular || loc.regularPrice || 'n/a'}</span>
+              <span class="price-value">${loc.price ? loc.price.Regular : 'n/a'} ${loc.currency || ''}</span>
 
-</div>
+            </div>
 
-<div class="price-row">
+            <div class="price-row">
 
-<span class="price-label">economy tier</span>
+              <span class="price-label">economy tier</span>
 
-<span class="price-value">${loc.economy || loc.economyPrice || 'n/a'}</span>
+              <span class="price-value">${loc.price ? loc.price.Economy : 'n/a'} ${loc.currency || ''}</span>
 
-</div>
+            </div>
 
-</div>
+          </div>
 
 
 <a href="#" class="btn-ticket">get tickets</a>
